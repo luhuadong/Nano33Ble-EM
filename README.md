@@ -1,5 +1,6 @@
-# nina-air
-An air monitor using Arduino nano 33 ble sense
+# Nano33Ble-EM
+
+An demo using Arduino Nano 33 BLE Sense for Environmental monitoring
 
 
 
@@ -20,3 +21,4 @@ An air monitor using Arduino nano 33 ble sense
 1. 通过对开发板外接显示屏显示
 2. 通过蓝牙在电脑端口显示
 3. 通过手机 App
+
