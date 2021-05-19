@@ -17,19 +17,22 @@ BLEService greetingService("180C"); // User defined service
 // standard 16-bit characteristic UUID
 // remote clients will only be able to read this
 BLEStringCharacteristic greetingCharacteristic("2A56", BLERead, 13);
-BLEUnsignedIntCharacteristic humidCharacteristic("2A6F", BLERead | BLENotify);
 
 const float CALIBRATION_FACTOR = -4.0; // Temperature calibration factor (Celsius)
 
 int previousTemperature = 0;
 unsigned int previousHumidity = 0;
 unsigned int previousPressure = 0;
+unsigned int previousLight    = 0;
+unsigned int previousNoise    = 0;
 
 #define UUID_ENV_SENSING_SERVICE   "181A"
 #define UUID_PRESSURE_CHAR         "2A6D"
 #define UUID_TEMPERATURE_CHAR      "2A6E"
 #define UUID_HUMIDITY_CHAR         "2A6F"
-#define UUID_COLOR_CHAR            "936b6a25-e503-4f7c-9349-bcc76c22b8c3"
+#define UUID_LIGHT_CHAR            "936b6a25-e503-4f7c-9349-bcc76c22b8c3"
+#define UUID_NOISE_CHAR            "936b6a25-e503-4f7c-9349-bcc76c22b8c4"
+
 
 BLEService environmentService("181A"); // Standard Environmental Sensing service
 
@@ -42,6 +45,9 @@ BLEService environmentService("181A"); // Standard Environmental Sensing service
 BLEIntCharacteristic tempCharacteristic("2A6E", BLERead | BLENotify);
 BLEUnsignedIntCharacteristic humidCharacteristic("2A6F", BLERead | BLENotify);
 BLEUnsignedIntCharacteristic pressureCharacteristic("2A6D", BLERead | BLENotify);
+
+BLEUnsignedIntCharacteristic lightCharacteristic(UUID_LIGHT_CHAR, BLERead | BLENotify);
+BLEUnsignedIntCharacteristic noiseCharacteristic(UUID_NOISE_CHAR, BLERead | BLENotify);
 
 // SPL calculation variables
 static const char channels = 1;  // default number of output channels
@@ -100,12 +106,16 @@ void setup()
     environmentService.addCharacteristic(tempCharacteristic);     // Add temperature characteristic
     environmentService.addCharacteristic(humidCharacteristic);    // Add humidity characteristic
     environmentService.addCharacteristic(pressureCharacteristic); // Add pressure characteristic
+    environmentService.addCharacteristic(lightCharacteristic);    // Add light characteristic
+    environmentService.addCharacteristic(noiseCharacteristic);    // Add noise characteristic
 
     BLE.addService(environmentService); // Add environment service
 
     tempCharacteristic.setValue(0);     // Set initial temperature value
     humidCharacteristic.setValue(0);    // Set initial humidity value
     pressureCharacteristic.setValue(0); // Set initial pressure value
+    lightCharacteristic.setValue(0);    // set initial light value
+    noiseCharacteristic.setValue(0);    // set initial noise value
 
     // Start advertising
     BLE.advertise();
@@ -145,7 +155,8 @@ void updateReadings()
     int temperature = getTemperature(CALIBRATION_FACTOR);
     unsigned int humidity = getHumidity();
     unsigned int pressure = getPressure();
-    unsigned int gray = getLight();
+    unsigned int light    = getLight();
+    unsigned int noise    = getNoise();
 
     if (temperature != previousTemperature) { // If reading has changed
         tempCharacteristic.writeValue(temperature); // Update characteristic
@@ -160,6 +171,16 @@ void updateReadings()
     if (pressure != previousPressure) { // If reading has changed
         pressureCharacteristic.writeValue(pressure);
         previousPressure = pressure;
+    }
+
+    if (light != previousLight) { // If reading has changed
+        lightCharacteristic.writeValue(light);
+        previousLight = light;
+    }
+
+    if (noise != previousNoise) { // If reading has changed
+        noiseCharacteristic.writeValue(noise);
+        previousNoise = noise;
     }
 
     Serial.println("--------------------------------");
@@ -222,6 +243,20 @@ unsigned int getLight()
     }
 
     return (unsigned int)(gray * 100);
+}
+
+// get digital microphone sensor
+unsigned int getNoise()
+{
+    // sound
+    double spl = SPL_cal();
+
+    // print the sensor value
+    Serial.print("Noise       = ");
+    Serial.print(spl);
+    Serial.println(" dB");
+
+    return (unsigned int)(spl * 100);
 }
 
 void onPDMdata()
