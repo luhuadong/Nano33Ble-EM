@@ -47,6 +47,8 @@ BLEUnsignedIntCharacteristic humidCharacteristic("2A6F", BLERead | BLENotify);
 BLEUnsignedIntCharacteristic pressureCharacteristic("2A6D", BLERead | BLENotify);
 
 BLEUnsignedIntCharacteristic lightCharacteristic(UUID_LIGHT_CHAR, BLERead | BLENotify);
+BLEDescriptor lightLabelDescriptor("2901", "Light");
+
 BLEUnsignedIntCharacteristic noiseCharacteristic(UUID_NOISE_CHAR, BLERead | BLENotify);
 
 // SPL calculation variables
@@ -108,6 +110,8 @@ void setup()
     environmentService.addCharacteristic(pressureCharacteristic); // Add pressure characteristic
     environmentService.addCharacteristic(lightCharacteristic);    // Add light characteristic
     environmentService.addCharacteristic(noiseCharacteristic);    // Add noise characteristic
+
+    lightCharacteristic.addDescriptor(lightLabelDescriptor); // Add light characteristic descriptor
 
     BLE.addService(environmentService); // Add environment service
 
@@ -233,7 +237,7 @@ unsigned int getLight()
     float gray = float(r+g+b)/122.91;
 
     // print the sensor value
-    Serial.print("Gray        = ");
+    Serial.print("Light       = ");
     Serial.print(gray);
     if (gray < 0.5) {
         Serial.println(" (Night)");
