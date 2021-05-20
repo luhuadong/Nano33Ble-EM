@@ -32,6 +32,23 @@ pip3 install -U \
 
 ```
 
+wx.StaticText
+
+A static text control displays one or more lines of read-only text.
+
+```python
+StaticText() StaticText(parent, id=ID_ANY, label=EmptyString, pos=DefaultPosition, size=DefaultSize, style=0, name=StaticTextNameStr)
+```
+
+TextCtrl
+
+A text control allows text to be displayed and edited.
+
+```python
+TextCtrl() TextCtrl(parent, id=ID_ANY, value=EmptyString, pos=DefaultPosition, size=DefaultSize, style=0, validator=DefaultValidator, name=TextCtrlNameStr)
+```
+
+
 
 相关链接
 
@@ -42,4 +59,5 @@ pip3 install -U \
 - <https://blog.csdn.net/qq_39136415/article/details/107108112>
 - <https://github.com/wxWidgets/Phoenix/issues/465>
 - <https://github.com/Gawhary/Qt-BLE-Tester>
+- <https://blog.csdn.net/qq_26369907/article/details/90408513>
 
