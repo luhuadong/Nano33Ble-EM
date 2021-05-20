@@ -37,8 +37,9 @@ An demo using Arduino Nano 33 BLE Sense for Environmental monitoring
 
 - Arduino 通过板载传感器采集温度、湿度、气压、光强、噪声五组数据，其中温度、湿度、气压数据直接从传感器读取，光强、噪声数据通过计算转换；
 - Arduino 开启 Standard Environmental Sensing 服务（181A），温度、湿度、气压使用预设 UUID，光强、噪声则使用自定义 UUID；
-- Arduino 的 Standard Environmental Sensing 服务的特征值均使用 Read 和 Notify 方式，因此 BLE Client 可以通过主动读取和被动监听的方式接收数据。
-- 通过 BLE 传输的数据均为整型数据，需进行转换才能显示。
+- Arduino 的 Standard Environmental Sensing 服务的特征值均使用 Read 和 Notify 方式，因此 BLE Client 可以通过主动读取和被动监听的方式接收数据；
+- 通过 BLE 传输的数据均为整型数据，需进行转换才能显示；
+- 运行 EnvironmentalMonitor.py 前请先安装依赖，并将 macaddr 修改为您所使用的 Nano 33 BLE 板的 MAC 地址。
 
 
 
