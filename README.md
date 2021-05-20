@@ -22,3 +22,24 @@ An demo using Arduino Nano 33 BLE Sense for Environmental monitoring
 2. 通过蓝牙在电脑端口显示
 3. 通过手机 App
 
+
+wxPython 安装
+
+```shell
+pip3 install -U \
+    -f https://extras.wxpython.org/wxPython4/extras/linux/gtk3/ubuntu-20.04 \
+    wxPython
+
+```
+
+
+相关链接
+
+- <https://stackoverflow.com/questions/44964899/how-to-get-notifications-from-ble-device-using-pygatt-in-python>
+- <https://blog.csdn.net/rumswell/article/details/6564181>
+- <https://pypi.org/project/pygatt/>
+- <https://github.com/peplin/pygatt/issues/232>
+- <https://blog.csdn.net/qq_39136415/article/details/107108112>
+- <https://github.com/wxWidgets/Phoenix/issues/465>
+- <https://github.com/Gawhary/Qt-BLE-Tester>
+

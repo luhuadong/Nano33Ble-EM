@@ -47,6 +47,7 @@ try:
         print("[{:0>2d}] baro : {:.2f} Pa".format(counter, baro))
         print("[{:0>2d}] light: {:.2f}   ".format(counter, light))
         print("[{:0>2d}] noise: {:.2f} dB".format(counter, noise))
+        print("--------------------------------")
 
         time.sleep(3)
         counter -= 1

@@ -39,7 +39,9 @@ def handle_data(handle, value):
     handle -- integer, characteristic read handle the data was received on
     value -- bytearray, the data returned in the notification
     """
-    print("Received data: %s" % hexlify(value))
+    #print("Received data: %s" % hexlify(value))
+    temp = (value[1] * 256 + value[0]) / 100
+    print("temp : {:.2f} 'C".format(temp))
 
 try:
     adapter.start()
@@ -52,10 +54,14 @@ except:
     print("connect BLE failed")
     sys.exit(1)
 
-read_data = device.char_read(uuid.UUID(temp_characteristic))
-print("%s" % hexlify(read_data))
+time.sleep(5)
 
-device.subscribe(uuid.UUID(temp_characteristic), callback=handle_data)
+#read_data = device.char_read(uuid.UUID(temp_characteristic))
+#print("%s" % hexlify(read_data))
+
+#time.sleep(5)
+
+device.subscribe(uuid.UUID(temp_characteristic), callback=handle_data, wait_for_response=True)
 #device.subscribe("00002a6e-0000-1000-8000-00805f9b34fb", callback=handle_data)
 print("subscribe success")
 
