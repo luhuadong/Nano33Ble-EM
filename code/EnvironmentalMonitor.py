@@ -23,6 +23,12 @@ class AppUI(wx.Frame):
         wx.Frame.__init__(self, parent, title=title, size=(400, 250))
         self.Center()
 
+        icon = wx.Icon()
+        icon.LoadFile("day.png", wx.BITMAP_TYPE_ICO)
+        self.SetIcon(icon)
+        #self.tbicon=wx.Icon()
+        #self.tbicon.SetIcon(icon,"Environmental Monitor")
+
         self.panel = wx.Panel(self)
         self.tLabel = wx.StaticText(self.panel, style = wx.ALIGN_CENTER, label="环境温度")
         self.hLabel = wx.StaticText(self.panel, style = wx.ALIGN_CENTER, label="环境湿度")

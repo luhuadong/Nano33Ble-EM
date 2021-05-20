@@ -196,7 +196,7 @@ int getTemperature(float calibration)
     float temperature = HTS.readTemperature();
 
     Serial.print("Temperature = ");
-    Serial.print(temperature);
+    Serial.print(temperature + calibration);
     Serial.println(" °C");
 
     return (int)((temperature + calibration) * 100);
